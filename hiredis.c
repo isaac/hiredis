@@ -1005,21 +1005,27 @@ static redisContext *redisContextInit(void) {
 
 void redisFree(redisContext *c) {
     printf("Start redisFree(redisContext *c)\n");
+    printf("Start if (c == NULL)\n");
     if (c == NULL) {
       printf("(c == NULL)\n");
       return;
     }
+    printf("Start if (c->fd > 0)\n");
     if (c->fd > 0) {
       printf("(c->fd > 0)\n");
       close(c->fd);
     }
+    printf("Start if (c->obuf != NULL)\n");
     if (c->obuf != NULL) {
       printf("(c->obuf != NULL)\n");
       sdsfree(c->obuf);
     }
+    printf("Start if (c->reader != NULL)\n");
     if (c->reader != NULL) {
       printf("(c->reader != NULL)\n");
+      printf("Start redisReaderFree(c->reader)\n");
       redisReaderFree(c->reader);
+      printf("End redisReaderFree(c->reader)\n");
     }
 
     printf("Start free(c)\n");
