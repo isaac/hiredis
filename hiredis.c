@@ -1004,15 +1004,28 @@ static redisContext *redisContextInit(void) {
 }
 
 void redisFree(redisContext *c) {
-    if (c == NULL)
-        return;
-    if (c->fd > 0)
-        close(c->fd);
-    if (c->obuf != NULL)
-        sdsfree(c->obuf);
-    if (c->reader != NULL)
-        redisReaderFree(c->reader);
+    printf("Start redisFree(redisContext *c)\n");
+    if (c == NULL) {
+      printf("(c == NULL)\n");
+      return;
+    }
+    if (c->fd > 0) {
+      printf("(c->fd > 0)\n");
+      close(c->fd);
+    }
+    if (c->obuf != NULL) {
+      printf("(c->obuf != NULL)\n");
+      sdsfree(c->obuf);
+    }
+    if (c->reader != NULL) {
+      printf("(c->reader != NULL)\n");
+      redisReaderFree(c->reader);
+    }
+
+    printf("Start free(c)\n");
     free(c);
+    printf("End free(c)\n");
+    printf("End redisFree(redisContext *c)\n");
 }
 
 /* Connect to a Redis instance. On error the field error in the returned
