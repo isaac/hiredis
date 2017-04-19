@@ -578,11 +578,22 @@ redisReader *redisReaderCreate(void) {
 }
 
 void redisReaderFree(redisReader *r) {
-    if (r->reply != NULL && r->fn && r->fn->freeObject)
-        r->fn->freeObject(r->reply);
-    if (r->buf != NULL)
-        sdsfree(r->buf);
+    printf("Start void redisReaderFree(redisReader *r)\n");
+    printf("Start if (r->reply != NULL && r->fn && r->fn->freeObject)\n");
+    if (r->reply != NULL && r->fn && r->fn->freeObject) {
+      printf("Start r->fn->freeObject(r->reply);\n");
+      r->fn->freeObject(r->reply);
+      printf("End r->fn->freeObject(r->reply);\n");
+    }
+    printf("Start if (r->buf != NULL)\n");
+    if (r->buf != NULL) {
+      printf("Start if (r->buf != NULL)\n");
+      sdsfree(r->buf);
+    }
+    printf("free(r)\n");
     free(r);
+    printf("End free(r)\n");
+    printf("End void redisReaderFree(redisReader *r)\n");
 }
 
 int redisReaderFeed(redisReader *r, const char *buf, size_t len) {
